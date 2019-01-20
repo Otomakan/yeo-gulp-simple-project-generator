@@ -12,6 +12,7 @@ const transform = require('vinyl-transform')
 const concat = require('gulp-concat');
 const source = require('vinyl-source-stream');
 const imagemin = require('gulp-imagemin');
+const htmlmin = require('gulp-htmlmin');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -33,6 +34,8 @@ gulp.task('serve', function() {
     gulp.watch('src/styles/*.scss',['clean-css']).on('change',browserSync.reload)
     // gulp.watch('src/js/*.js',['browserify']).on('change',browserSync.reload)
     gulp.watch('*').on('change',browserSync.reload)
+     gulp.watch('src/content/*.html',['minhtml']).on('change',browserSync.reload)
+
 
 })
 gulp.task('compress', ()=>
@@ -44,7 +47,7 @@ gulp.task('compress', ()=>
             console.log(e);}))
          .pipe(uglify().on('error', function(e){
             console.log(e);}))
-        .pipe(gulp.dest('./dist/'))
+        .pipe(gulp.dest('dist/'))
 );
 
 // DONT MIND THIS FOR NOW, MIGHT USE FOR BROWSERIFY LATER
@@ -72,9 +75,13 @@ gulp.task('clean-css',()=>
   .pipe(sass().on('error', sass.logError))
   .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
   .pipe(cleanCSS())
-  .pipe(gulp.dest('./dist/'))
+  .pipe(gulp.dest('dist/styles'))
   )
-
+gulp.task('minhtml',()=>
+  gulp.src(['src/*.html','src/content/*.html','src/content/**/*.html','src/content/**/**/*.html','src/content/**/**/**/*.html'])
+  .pipe(htmlmin())
+  .pipe(gulp.dest('dist'))
+  )
 gulp.task('imagemin', () =>
     gulp.src('src/assets/images/*')
         .pipe(imagemin())

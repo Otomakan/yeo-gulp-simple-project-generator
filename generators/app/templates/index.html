@@ -4,8 +4,12 @@
 	<meta charset='utf-8'>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<script type="text/javascript" src='./dist/bundle.js'></script>
+	<link rel="stylesheet" type="text/css" href="./dist/main.css">
+	<% if(style == "Bootstrap") { %>
 	<link rel="stylesheet" type="text/css" href="./dist/bootstrapped-style.css">
-	<title>My New Project</title>
+	<% } %>
+
+	<title><%= title %></title>
 </head>
 <body>
 	<nav class='navbar navbar-expand-lg navbar-light'>

@@ -1,7 +1,7 @@
 {
-  "name": "generator-simplehttp",
+  "name": "generator-simple-gulp-project",
   "version": "0.0.0",
-  "description": "Yo to create a simple project structure nd workflow using gulp and browserify to bundle and server the files. We use ECMAScript 2016, option to use Bootstrap for the styling, maybe Jquery after, and browserify",
+  "description": "Yo to create a simple project structure and workflow using gulp to bundle and server the files. We use ECMAScript 2016, SCSS styling, option to use Bootstrap for the styling, maybe Jquery after, and browserify",
   "homepage": "",
   "author": {
     "name": "Otomakan",

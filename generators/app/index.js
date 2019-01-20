@@ -16,6 +16,13 @@ module.exports = class extends Generator {
         name: 'title',
         message: 'What is the name of your project?',
         default: "My New Project"
+      },
+      {
+        type: 'list',
+        name: 'style',
+        message: 'Choose a preloaded stylesheet?',
+        default: "No Style",
+        choices: ["No Style", "Bootstrap"]
       }
     ];
 
@@ -32,7 +39,8 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('index.html'),
       this.destinationPath('index.html'),
-      {title:this.answers.title}
+      {title:this.answers.title,
+      style:this.answers.style},
     );
      this.fs.copyTpl(
       this.templatePath('gulpfile.js'),
@@ -44,11 +52,18 @@ module.exports = class extends Generator {
       this.destinationPath('src/js/main.js'),
       {title:this.answers.title}
     );
-    this.fs.copyTpl(
-      this.templatePath('src/styles/bootstrapped-style.scss'),
-      this.destinationPath('src/styles/bootstrapped-style.scss'),
-      {title:this.answers.title}
-    );
+    
+    {
+      const content = '// Write Your SCSS here !'
+      this.fs.writeFile('src/styles/main.scss',content,'utf8')
+    }
+    if(this.answers.style == "Bootstrap"){
+      this.fs.copyTpl(
+        this.templatePath('src/styles/bootstrapped-style.scss'),
+        this.destinationPath('src/styles/bootstrapped-style.scss'),
+      );
+    }
+
     this.fs.copyTpl(
       this.templatePath('src/assets/images/panda-cute.png'),
     this.destinationPath('src/assets/images/panda-cute.png')

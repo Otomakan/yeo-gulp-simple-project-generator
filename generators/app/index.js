@@ -18,6 +18,12 @@ module.exports = class extends Generator {
         default: "My New Project"
       },
       {
+        type: 'input',
+        name: 'description',
+        message: 'Add some description for your Package.json if you want',
+        default: "No description"
+      },
+      {
         type: 'list',
         name: 'style',
         message: 'Choose a preloaded stylesheet?',
@@ -34,11 +40,20 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      {title:this.answers.title}
+      {title:this.answers.title,
+        description: this.answers.description,
+        style: this.answers.style
+      }
     );
     this.fs.copyTpl(
-      this.templatePath('index.html'),
-      this.destinationPath('index.html'),
+      this.templatePath('src/index.html'),
+      this.destinationPath('src/index.html'),
+      {title:this.answers.title,
+      style:this.answers.style},
+    );
+    this.fs.copyTpl(
+      this.templatePath('src/content/next-page.html'),
+      this.destinationPath('src/content/next-page.html'),
       {title:this.answers.title,
       style:this.answers.style},
     );
@@ -52,11 +67,13 @@ module.exports = class extends Generator {
       this.destinationPath('src/js/main.js'),
       {title:this.answers.title}
     );
+
+    this.fs.copyTpl(
+      this.templatePath('src/styles/main.scss'),
+      this.destinationPath('src/styles/main.scss'),
+      {title:this.answers.title}
+    );
     
-    {
-      const content = '// Write Your SCSS here !'
-      this.fs.writeFile('src/styles/main.scss',content,'utf8')
-    }
     if(this.answers.style == "Bootstrap"){
       this.fs.copyTpl(
         this.templatePath('src/styles/bootstrapped-style.scss'),

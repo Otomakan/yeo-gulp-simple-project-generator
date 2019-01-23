@@ -8,6 +8,13 @@
 	<% if(style == "Bootstrap") { %>
 	<link rel="stylesheet" type="text/css" href="./dist/bootstrapped-style.css">
 	<% } %>
+	<% if(style == "Skeleton") { %>
+	<link rel="stylesheet" type="text/css" href="./dist/skeleton/skeleton.css">
+	<link rel="stylesheet" type="text/css" href="./dist/skeleton/normalize.css">
+	<% } %>
+	<% if(style == "Bulma") { %>
+	<link rel="stylesheet" type="text/css" href="./dist/bulma.css">
+	<% } %>
 
 	<title><%= title %></title>
 </head>

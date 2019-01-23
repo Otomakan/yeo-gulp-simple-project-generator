@@ -1,20 +1,16 @@
-
-
 {
-  "name": "gsrdf",
+  "name": "some",
   "version": "1.0.0",
-  "description": "fasdfsdgsg",
+  "description": "lol",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "bootstrap-scss": "^4.1.3"
-  },
+  "dependencies": {},
   "devDependencies": {
-         "@babel/core": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.3",
@@ -34,4 +30,3 @@
     "vinyl-transform": "^1.0.0"
   }
 }
-

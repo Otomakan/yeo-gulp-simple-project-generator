@@ -28,7 +28,7 @@ module.exports = class extends Generator {
         name: 'style',
         message: 'Choose a preloaded stylesheet?',
         default: "No Style",
-        choices: ["No Style", "Bootstrap"]
+        choices: ["No Style", "Bootstrap", "Skeleton", "Bulma"]
       }
     ];
 
@@ -70,16 +70,33 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('src/styles/main.scss'),
-      this.destinationPath('src/styles/main.scss'),
+      this.destinationPath('src/styles/main.css'),
       {title:this.answers.title}
     );
-    
-    if(this.answers.style == "Bootstrap"){
-      this.fs.copyTpl(
-        this.templatePath('src/styles/bootstrapped-style.scss'),
-        this.destinationPath('src/styles/bootstrapped-style.scss'),
-      );
+    var srcStyleFiles =[]
+    switch (this.answers.style){
+      
+      case "Bootstrap":
+        srcStyleFiles.push('bootstrapped-style.scss')
+        break
+      case "Skeleton":
+        srcStyleFiles.push('skeleton/skeleton.css')
+        srcStyleFiles.push('skeleton/normalize.css')
+        break
+      case "Bulma":
+        srcStyleFiles.push('bulma.scss')
+        break
+      default:
+        break
     }
+    // var that = this
+      srcStyleFiles.forEach((file)=>{
+        this.fs.copyTpl(
+          this.templatePath('src/styles/' + file),
+          this.destinationPath('src/styles/' + file),
+        )
+      })
+   
 
     this.fs.copyTpl(
       this.templatePath('src/assets/images/panda-cute.png'),

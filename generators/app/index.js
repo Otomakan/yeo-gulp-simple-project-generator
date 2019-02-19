@@ -70,7 +70,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('src/styles/main.scss'),
-      this.destinationPath('src/styles/main.css'),
+      this.destinationPath('src/styles/main.scss'),
       {title:this.answers.title}
     );
     var srcStyleFiles =[]

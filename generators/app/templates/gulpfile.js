@@ -13,6 +13,9 @@ const concat = require('gulp-concat');
 const source = require('vinyl-source-stream');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
+var fs = require('fs');
+var path = require('path');
+var rename = require('gulp-rename');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -33,6 +36,16 @@ const htmlFolders = [
 'src/content/**/**/*.html',
 'src/content/**/**/**/*.html']
 
+function getFolders(dir) {
+    return fs.readdirSync(dir)
+      .filter(function(file) {
+        return fs.statSync(path.join(dir, file)).isDirectory();
+      });
+}
+
+
+
+
 gulp.task('serve', function() {
     browserSync.init({
         server: "./dist"
@@ -47,9 +60,15 @@ gulp.task('serve', function() {
 // Look for changes in Javascript files bundle all of them
 // Babelifies and uglifies the bundle, then writes the sourcemaps
 
-gulp.task('compress', ()=>
-        gulp.src('src/js/*.js')
-        .pipe(concat('bundle.js'))
+gulp.task('compress', ()=>{
+
+   var folders = getFolders('src/js/');
+    var tasks = folders.map( (folder)=>
+        gulp.src(path.join('src/js/', folder, '/**/*.js'))
+         .pipe(concat(folder + '.js'))
+
+        .pipe(gulp.dest('dist/'))
+
          .pipe(babel({
             presets: ['@babel/env']
         }).on('error', function(e){
@@ -57,8 +76,10 @@ gulp.task('compress', ()=>
          .pipe(uglify().on('error', function(e){
             console.log(e);}))
          .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/'))
-);
+         .pipe(rename(folder + '.min.js')) 
+         .pipe(gulp.dest('dist/js'))
+        )
+});
 
 // DONT MIND THIS FOR NOW, MIGHT USE FOR BROWSERIFY LATER
 // gulp.task('browserify', function () {
